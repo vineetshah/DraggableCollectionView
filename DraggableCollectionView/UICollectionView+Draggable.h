@@ -12,4 +12,8 @@
 @property (nonatomic, assign) BOOL draggable;
 @property (nonatomic, assign) UIEdgeInsets scrollingEdgeInsets;
 @property (nonatomic, assign) CGFloat scrollingSpeed;
+
+// Call this method from the -dealloc method of any class that accesses the properties above
+- (void)removeHelper;
+
 @end

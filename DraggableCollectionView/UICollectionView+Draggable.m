@@ -20,6 +20,14 @@
     return helper;
 }
 
+- (void)removeHelper
+{
+    LSCollectionViewHelper *helper = objc_getAssociatedObject(self, "LSCollectionViewHelper");
+    if (helper) {
+        objc_setAssociatedObject(self, "LSCollectionViewHelper", nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
 - (BOOL)draggable
 {
     return [self getHelper].enabled;
