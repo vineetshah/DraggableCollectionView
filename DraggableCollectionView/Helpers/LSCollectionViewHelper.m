@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 static int kObservingCollectionViewLayoutContext;
+static NSString* const kObservingCollectionViewLayoutKeyPath = @"collectionViewLayout";
 
 #ifndef CGGEOMETRY__SUPPORT_H_
 CG_INLINE CGPoint
@@ -49,7 +50,7 @@ typedef NS_ENUM(NSInteger, _ScrollingDirection) {
     if (self) {
         _collectionView = collectionView;
         [_collectionView addObserver:self
-                          forKeyPath:@"collectionViewLayout"
+                          forKeyPath:kObservingCollectionViewLayoutKeyPath
                              options:0
                              context:&kObservingCollectionViewLayoutContext];
         _scrollingEdgeInsets = UIEdgeInsetsMake(50.0f, 50.0f, 50.0f, 50.0f);
@@ -76,6 +77,13 @@ typedef NS_ENUM(NSInteger, _ScrollingDirection) {
         [self layoutChanged];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [_collectionView removeObserver:self
+                         forKeyPath:kObservingCollectionViewLayoutKeyPath
+                            context:&kObservingCollectionViewLayoutContext];
 }
 
 - (LSCollectionViewLayoutHelper *)layoutHelper
